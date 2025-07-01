@@ -1,0 +1,78 @@
+﻿@using Lab2_JordanGuevara.Models  <!-- Cambia "TuProyecto.Models" por el namespace real de tu ViewModel -->
+
+@{
+    var Model = new List<ListClienteViewModel>
+{
+        new ListClienteViewModel {
+            id_cli = 1,
+            nombre_cli = "Juan Pérez",
+            cedula_cli = "0102030405",
+            correo_cli = "juan@example.com",
+            fechaNacimiento_cli = new DateTime(1985, 6, 15),
+            FotoPath = "/images/juan.jpg"
+        },
+        new ListClienteViewModel {
+            id_cli = 2,
+            nombre_cli = "María Gómez",
+            cedula_cli = "0607080910",
+            correo_cli = "maria@example.com",
+            fechaNacimiento_cli = new DateTime(1990, 11, 23),
+            FotoPath = "/images/maria.jpg"
+        },
+        new ListClienteViewModel {
+            id_cli = 3,
+            nombre_cli = "Jordan Guevara",
+            cedula_cli = "2300043631",
+            correo_cli = "axnd1r3@gmail.com",
+            fechaNacimiento_cli = new DateTime(2025, 06, 11),
+            FotoPath = "/images/si.png"
+        }
+    };
+}
+@model IEnumerable<ListClienteViewModel>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Cédula</th>
+            <th>Correo</th>
+            <th>Fecha Nac.</th>
+            <th>Foto</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var c in Model)
+            {
+                <tr>
+                    <td>@c.nombre_cli</td>
+                    <td>@c.cedula_cli</td>
+                    <td>@c.correo_cli</td>
+                    <td>@c.fechaNacimiento_cli.ToShortDateString()</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(c.FotoPath))
+                        {
+                            @Html.Raw($"<img src='{c.FotoPath}' width='100' />")
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", "Cliente",new { id = c.id_cli }) |
+                        @Html.ActionLink("Eliminar", "Delete", "Cliente", new { id = c.id_cli },
+                            new { onclick = "return confirm('¿Desea borrar este cliente?');" })
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6">No hay clientes para mostrar.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Nuevo Cliente", "Create", "Cliente")

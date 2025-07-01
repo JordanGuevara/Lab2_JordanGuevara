@@ -1,0 +1,47 @@
+@model Lab2_JordanGuevara.Models.Cliente
+
+<h2>Editar Cliente</h2>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(m => m.id_cli) <!-- Para mantener el id del cliente -->
+
+    <div>
+        @Html.LabelFor(m => m.nombre_cli)
+        @Html.TextBoxFor(m => m.nombre_cli)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.cedula_cli)
+        @Html.TextBoxFor(m => m.cedula_cli)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.correo_cli)
+        @Html.TextBoxFor(m => m.correo_cli)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.fechaNacimiento_cli)
+        @Html.TextBoxFor(m => m.fechaNacimiento_cli, new { @class = "datepicker" })
+    </div>
+    <div>
+        <label>Foto</label>
+        <input type="file" name="Foto" />
+        @if (!string.IsNullOrEmpty(Model?.FotoPath))
+        {
+            <img src="@Model.FotoPath" width="100" />
+        }
+    </div>
+
+    <button type="submit">Guardar Cambios</button>
+}
+
+@section scripts {
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
+        });
+    </script>
+}

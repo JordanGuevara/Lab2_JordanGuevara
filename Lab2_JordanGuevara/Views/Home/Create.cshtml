@@ -1,0 +1,49 @@
+﻿@model Lab2_JordanGuevara.Models.Cliente
+
+<h2>Crear Cliente</h2>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.nombre_cli)
+        @Html.TextBoxFor(m => m.nombre_cli, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.cedula_cli)
+        @Html.TextBoxFor(m => m.cedula_cli, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.correo_cli)
+        @Html.TextBoxFor(m => m.correo_cli, new { @class = "form-control", type = "email" })
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.fechaNacimiento_cli)
+        @Html.TextBoxFor(m => m.fechaNacimiento_cli, new { @class = "form-control datepicker" })
+    </div>
+
+    <div class="mb-3">
+        <label>Foto</label>
+        <input type="file" name="Foto" class="form-control" />
+        @if (!string.IsNullOrEmpty(Model?.FotoPath))
+        {
+            <img src="@Model.FotoPath" width="100" class="mt-2" />
+        }
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+}
+
+@section scripts {
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
+        });
+    </script>
+}

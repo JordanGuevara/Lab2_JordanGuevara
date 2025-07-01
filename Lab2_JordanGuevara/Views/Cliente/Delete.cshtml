@@ -1,0 +1,10 @@
+﻿@model Lab2_JordanGuevara.Models.Cliente
+
+<h3>¿Confirmar eliminación?</h3>
+<div>Nombre: @Model.nombre_cli</div>
+
+@using(Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <button type="submit">Sí, Eliminar</button>
+    @Html.ActionLink("Cancelar", "Index")
+}
